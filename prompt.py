@@ -11,7 +11,8 @@ load_dotenv()
 # Model
 # ─────────────────────────────────────────────
 model = ChatGroq(
-    model="llama-3.3-70b-versatile",
+   model="llama-3.3-70b-versatile",
+   
     temperature=0.2,
 )
 
@@ -22,7 +23,8 @@ ac_prompt = ChatPromptTemplate.from_messages([
     (
         "system",
         """
-You are a senior software architect and code review expert.
+You are a senior software architect and code review expert, you have experience of about in 20 years in tech related feild and have
+a good expertise in software related things
 Your task is to generate concise, implementation-focused acceptance criteria for engineering tasks.
 Acceptance criteria must:
 - Be specific and testable from code review
@@ -65,7 +67,7 @@ Generate implementation-focused acceptance criteria.
 # ─────────────────────────────────────────────
 EMAIL = URL = TOKEN = PROJECT = ""
 REQ_TEXT = PERSON_TEXT = ""
-TEAM_MEMBERS = {}  # { "Uvuv": "backend developer", ... }
+TEAM_MEMBERS = {}  
 
 
 # ─────────────────────────────────────────────
@@ -103,7 +105,7 @@ DOCUMENT:
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
-        print("⚠️ Could not parse team members JSON. Raw output:")
+        print(" Could not parse team members JSON. Raw output:")
         print(raw)
         return {}
 
@@ -355,7 +357,7 @@ def analyze_requirement_doc(max_retries: int = 3) -> dict:
             error_feedback = "\n".join(errors)
     else:
         raise RuntimeError(
-            f"❌ Failed to generate valid output after {max_retries} attempts. "
+            f" Failed to generate valid output after {max_retries} attempts. "
             f"Last errors:\n{error_feedback}"
         )
 
