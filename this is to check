@@ -1,0 +1,44 @@
+from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseModel, EmailStr, Field
+from passlib.context import CryptContext
+
+app = FastAPI(title="User Registration API")
+
+
+# Temporary in-memory database
+users_db = {}
+
+
+class UserRegister(BaseModel):
+    email: EmailStr
+    password: str = Field(..., min_length=8)
+    full_name: str = Field(..., min_length=2)
+
+
+@app.post("/register", status_code=status.HTTP_201_CREATED)
+def register(user: UserRegister):
+    email = user.email.lower()
+
+    # Check if user already exists
+    if email in users_db:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Email is already registered"
+        )
+
+    
+
+    # Save user
+    users_db[email] = {
+        "full_name": user.full_name,
+        "email": email,
+        "password": hashed_password
+    }
+
+    return {
+        "message": "User registered successfully",
+        "user": {
+            "email": email,
+            "full_name": user.full_name
+        }
+    }
